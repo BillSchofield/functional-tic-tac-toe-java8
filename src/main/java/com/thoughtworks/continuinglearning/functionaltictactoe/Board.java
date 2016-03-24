@@ -26,7 +26,7 @@ public class Board {
         printStream.println(boardString);
     }
 
-    public void mark(int location) {
-        cells.set(location - 1, "X");
+    public void mark(int location, String symbol) {
+        cells.set(location - 1, symbol);
     }
 }

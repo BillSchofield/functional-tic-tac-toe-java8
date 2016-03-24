@@ -4,10 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.UnaryOperator;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -22,36 +20,51 @@ public class BoardTest {
 
     @Before
     public void setUp() throws Exception {
-        cells = Arrays.asList(" ", " ", " ", " ", " ", " ", " ", " ", " ");
+        cells = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
         printStream = mock(PrintStream.class);
         board = new Board(cells, printStream);
     }
 
     @Test
     public void shouldPrintGridWhenDrawing() {
-        cells.replaceAll(s -> "*");
-
         board.draw();
 
         verify(printStream).println(
-                "*|*|*\n" +
+                "1|2|3\n" +
                 "-----\n" +
-                "*|*|*\n" +
+                "4|5|6\n" +
                 "-----\n" +
-                "*|*|*\n"
+                "7|8|9\n"
         );
     }
 
     @Test
     public void shouldSetCellZeroToXWhenLocationOneMarked() {
-        board.mark(1);
+        board.mark(1, "X");
 
         assertThat(cells.get(0), is("X"));
     }
 
     @Test
     public void shouldPutCellValuesInGridWhenDrawing() {
+        cells.replaceAll(s -> "*");
 
+        board.draw();
+
+        verify(printStream).println(
+                "*|*|*\n" +
+                        "-----\n" +
+                        "*|*|*\n" +
+                        "-----\n" +
+                        "*|*|*\n"
+        );
+    }
+
+    @Test
+    public void shouldSetCellZeroToSymbolUsedToMarked() {
+        board.mark(1, "+");
+
+        assertThat(cells.get(0), is("+"));
     }
 
 

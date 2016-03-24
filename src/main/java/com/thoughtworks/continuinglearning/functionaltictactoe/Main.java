@@ -13,7 +13,9 @@ public class Main {
         List<String> cells = Arrays.asList(" ", " ", " ", " ", " ", " ", " ", " ", " ");
         Board board = new Board(cells, printStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        Game game = new Game(board, new Player(board, printStream, bufferedReader));
+        Player playerOne = new Player("X", board, printStream, bufferedReader);
+        Player playerTwo = new Player("O", board, printStream, bufferedReader);
+        Game game = new Game(board, playerOne, playerTwo);
         game.start();
     }
 }

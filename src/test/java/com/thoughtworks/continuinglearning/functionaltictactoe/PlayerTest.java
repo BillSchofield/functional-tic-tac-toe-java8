@@ -2,13 +2,11 @@ package com.thoughtworks.continuinglearning.functionaltictactoe;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -26,7 +24,7 @@ public class PlayerTest {
         board = mock(Board.class);
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
-        player = new Player(board, printStream, bufferedReader);
+        player = new Player("X", board, printStream, bufferedReader);
     }
 
     @Test
@@ -43,6 +41,16 @@ public class PlayerTest {
 
         player.move();
 
-        verify(board).mark(1);
+        verify(board).mark(1, "X");
+    }
+
+    @Test
+    public void shouldMarkBoardWithMySymbolWhenMySymbolIsPlus() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("1");
+        player = new Player("+", board, printStream, bufferedReader);
+
+        player.move();
+
+        verify(board).mark(1, "+");
     }
 }
