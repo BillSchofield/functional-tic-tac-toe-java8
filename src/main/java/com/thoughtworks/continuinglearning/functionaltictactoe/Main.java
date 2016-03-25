@@ -33,7 +33,14 @@ public class Main {
         List<EndCondition> endConditions = asList(
                 new NoEmptyCellsEndCondition(cells),
                 new ThreeInARowWinsEndCondition(asList(
-                        new ThreeInARowCondition(1, 2, 3, board)
+                        new ThreeInARowCondition(1, 2, 3, board),
+                        new ThreeInARowCondition(4, 5, 6, board),
+                        new ThreeInARowCondition(7, 8, 9, board),
+                        new ThreeInARowCondition(1, 4, 7, board),
+                        new ThreeInARowCondition(2, 5, 8, board),
+                        new ThreeInARowCondition(3, 6, 9, board),
+                        new ThreeInARowCondition(1, 5, 9, board),
+                        new ThreeInARowCondition(3, 5, 7, board)
                 ))
         );
         return new Game(endConditions);

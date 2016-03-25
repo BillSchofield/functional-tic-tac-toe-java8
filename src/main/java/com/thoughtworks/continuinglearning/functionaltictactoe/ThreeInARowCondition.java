@@ -3,6 +3,8 @@ package com.thoughtworks.continuinglearning.functionaltictactoe;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
+
 public class ThreeInARowCondition implements Condition {
     private final int first;
     private final int second;
@@ -18,7 +20,10 @@ public class ThreeInARowCondition implements Condition {
 
     @Override
     public boolean isMet() {
-        List<String> tuple = board.tuple(first, second, third);
-        return tuple.stream().distinct().collect(Collectors.toList()).size() == 1;
+        return board.
+                tuple(first, second, third).
+                stream().
+                distinct().
+                collect(counting()) == 1;
     }
 }

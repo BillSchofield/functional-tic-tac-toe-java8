@@ -36,5 +36,4 @@ public class ThreeInARowWinsEndConditionTest {
         when(winCondition.isMet()).thenReturn(false);
         assertThat(endCondition.isMet(), is(false));
     }
-
 }
