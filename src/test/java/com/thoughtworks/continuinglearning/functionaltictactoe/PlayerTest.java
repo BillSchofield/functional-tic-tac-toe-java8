@@ -3,7 +3,6 @@ package com.thoughtworks.continuinglearning.functionaltictactoe;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -17,19 +16,19 @@ public class PlayerTest {
     private Board board;
     private PrintStream printStream;
     private Player player;
-    private BufferedReader bufferedReader;
+    private ValidInputReader inputReader;
 
     @Before
     public void setUp() throws Exception {
         board = mock(Board.class);
         printStream = mock(PrintStream.class);
-        bufferedReader = mock(BufferedReader.class);
-        player = new Player("X", board, printStream, bufferedReader);
+        inputReader = mock(ValidInputReader.class);
+        player = new Player("X", board, printStream, inputReader);
     }
 
     @Test
     public void shouldPromptPlayerWhenMakingMove() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
+        when(inputReader.readInteger()).thenReturn(1);
         player.move();
 
         verify(printStream).println(contains("enter a number"));
@@ -37,7 +36,7 @@ public class PlayerTest {
 
     @Test
     public void shouldMarkBoardInPositionOneWhenPlayerEntersOne() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
+        when(inputReader.readInteger()).thenReturn(1);
 
         player.move();
 
@@ -46,11 +45,12 @@ public class PlayerTest {
 
     @Test
     public void shouldMarkBoardWithMySymbolWhenMySymbolIsPlus() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
-        player = new Player("+", board, printStream, bufferedReader);
+        when(inputReader.readInteger()).thenReturn(1);
+        player = new Player("+", board, printStream, inputReader);
 
         player.move();
 
         verify(board).mark(1, "+");
     }
+
 }
