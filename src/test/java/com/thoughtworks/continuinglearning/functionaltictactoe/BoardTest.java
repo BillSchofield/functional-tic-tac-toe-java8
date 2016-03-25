@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -53,10 +54,10 @@ public class BoardTest {
 
         verify(printStream).println(
                 "*|*|*\n" +
-                        "-----\n" +
-                        "*|*|*\n" +
-                        "-----\n" +
-                        "*|*|*\n"
+                "-----\n" +
+                "*|*|*\n" +
+                "-----\n" +
+                "*|*|*\n"
         );
     }
 
@@ -65,6 +66,23 @@ public class BoardTest {
         board.mark(1, "+");
 
         assertThat(cells.get(0), is("+"));
+    }
+
+    @Test
+    public void shouldFindCellWhenItIsUnmarked() {
+        Optional<Integer> openCell = board.findOpenCell(1);
+
+        assertThat(openCell.isPresent(), is(true));
+        assertThat(openCell.get(), is(1));
+    }
+
+    @Test
+    public void shouldNotFindCellWhenItIsMarked() {
+        cells.set(0, "+");
+
+        Optional<Integer> openCell = board.findOpenCell(1);
+
+        assertThat(openCell.isPresent(), is(false));
     }
 
 
