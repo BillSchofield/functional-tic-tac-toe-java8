@@ -3,19 +3,14 @@ package com.thoughtworks.continuinglearning.functionaltictactoe;
 public class Game {
     private final Board board;
     private final Player playerOne;
-    private final Player playerTwo;
 
-    public Game(Board board, Player playerOne, Player playerTwo) {
+    public Game(Board board, Player playerOne) {
         this.board = board;
         this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
     }
 
     public void start() {
         board.draw();
         playerOne.move();
-        board.draw();
-        playerTwo.move();
-        board.draw();
     }
 }

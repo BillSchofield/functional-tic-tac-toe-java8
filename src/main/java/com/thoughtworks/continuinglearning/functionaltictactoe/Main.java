@@ -3,8 +3,7 @@ package com.thoughtworks.continuinglearning.functionaltictactoe;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -14,9 +13,15 @@ public class Main {
         Board board = new Board(cells, printStream);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         ValidInputReader inputReader = new ValidInputReader(board, printStream, bufferedReader);
-        Player playerOne = new Player("X", board, printStream, inputReader);
-        Player playerTwo = new Player("O", board, printStream, inputReader);
-        Game game = new Game(board, playerOne, playerTwo);
+
+        List<Player> playerOneOpponent = new ArrayList<>();
+        Player playerOne = new Player("X", board, printStream, inputReader, playerOneOpponent);
+        List<Player> playerTwoOpponent = Collections.singletonList(playerOne);
+        Player playerTwo = new Player("O", board, printStream, inputReader, playerTwoOpponent);
+        playerOneOpponent.add(playerTwo);
+
+        Game game = new Game(board, playerOne);
         game.start();
+        printStream.println("Game is a draw");
     }
 }

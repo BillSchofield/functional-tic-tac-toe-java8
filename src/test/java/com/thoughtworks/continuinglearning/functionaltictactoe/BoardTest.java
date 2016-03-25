@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -21,7 +22,7 @@ public class BoardTest {
 
     @Before
     public void setUp() throws Exception {
-        cells = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        cells = asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
         printStream = mock(PrintStream.class);
         board = new Board(cells, printStream);
     }
@@ -83,6 +84,11 @@ public class BoardTest {
         Optional<Integer> openCell = board.findOpenCell(1);
 
         assertThat(openCell.isPresent(), is(false));
+    }
+
+    @Test
+    public void shouldFindEmptyCellsWhenTheyContainsADigit() {
+        assertThat(board.openCells(), is(asList(1, 2, 3, 4, 5, 6, 7, 8, 9)));
     }
 
 
