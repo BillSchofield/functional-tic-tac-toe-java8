@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,21 +13,18 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class BoardTest {
 
     private PrintStream printStream;
     private Board board;
     private List<String> cells;
-    private ArrayList<EndCondition> endConditions;
 
     @Before
     public void setUp() throws Exception {
         cells = asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
         printStream = mock(PrintStream.class);
-        endConditions = new ArrayList<>();
-        board = new Board(cells, printStream, endConditions);
+        board = new Board(cells, printStream);
     }
 
     @Test
@@ -90,17 +87,11 @@ public class BoardTest {
     }
 
     @Test
-    public void shouldFindNoWinConditionWhenNoConditionIsMet() {
-        assertThat(board.gameEndCondition().isPresent(), is(false));
+    public void shouldCreateTupleOfCells() {
+        cells.set(0, "x");
+        cells.set(1, "y");
+        cells.set(2, "z");
+
+        assertThat(board.tuple(1, 2, 3), is(asList("x", "y", "z")));
     }
-
-    @Test
-    public void shouldFindWinConditionWhenOneIsMet() {
-        EndCondition endCondition = mock(EndCondition.class);
-        when(endCondition.isMet()).thenReturn(true);
-        endConditions.add(endCondition);
-
-        assertThat(board.gameEndCondition().isPresent(), is(true));
-    }
-
 }
