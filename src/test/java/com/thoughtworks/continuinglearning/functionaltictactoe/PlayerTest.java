@@ -24,7 +24,7 @@ public class PlayerTest {
     private Player opponent;
     private List<Player> otherPlayer;
     private EndCondition endCondition;
-    private Game game;
+    private GameEnder gameEnder;
 
     @Before
     public void setUp() throws Exception {
@@ -34,9 +34,9 @@ public class PlayerTest {
         inputReader = mock(ValidInputReader.class);
         opponent = mock(Player.class);
         otherPlayer = singletonList(opponent);
-        game = mock(Game.class);
-        when(game.endCondition()).thenReturn(empty());
-        player = new Player("X", "3", board, game, printStream, inputReader, otherPlayer);
+        gameEnder = mock(GameEnder.class);
+        when(gameEnder.endCondition()).thenReturn(empty());
+        player = new Player("X", "3", board, gameEnder, printStream, inputReader, otherPlayer);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PlayerTest {
     @Test
     public void shouldMarkBoardWithMySymbolWhenMySymbolIsPlus() throws IOException {
         when(inputReader.readInteger()).thenReturn(1);
-        player = new Player("+", "3", board, game, printStream, inputReader, otherPlayer);
+        player = new Player("+", "3", board, gameEnder, printStream, inputReader, otherPlayer);
 
         player.move();
 
@@ -70,7 +70,7 @@ public class PlayerTest {
 
     @Test
     public void shouldTellOtherPlayerToMoveWhenWeAreFinishedMoving() {
-        when(game.endCondition()).thenReturn(empty());
+        when(gameEnder.endCondition()).thenReturn(empty());
 
         player.move();
 
@@ -79,7 +79,7 @@ public class PlayerTest {
 
     @Test
     public void shouldNotTellOtherPlayerToMoveWhenBoardIsFull() {
-        when(game.endCondition()).thenReturn(of(endCondition));
+        when(gameEnder.endCondition()).thenReturn(of(endCondition));
 
         player.move();
 
@@ -88,7 +88,7 @@ public class PlayerTest {
 
     @Test
     public void shouldNotTellOtherPlayerToMoveWhenGameIsWon() {
-        when(game.endCondition()).thenReturn(of(endCondition));
+        when(gameEnder.endCondition()).thenReturn(of(endCondition));
         player.move();
 
         verify(opponent, never()).move();
@@ -103,7 +103,7 @@ public class PlayerTest {
 
     @Test
     public void shouldFindEndCondition() {
-        when(game.endCondition()).thenReturn(of(endCondition));
+        when(gameEnder.endCondition()).thenReturn(of(endCondition));
         assertThat(player.move(), is(endCondition));
     }
 

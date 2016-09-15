@@ -1,19 +1,21 @@
 package com.thoughtworks.continuinglearning.functionaltictactoe;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.PrintStream;
 
 public class Game {
-    private final List<EndCondition> endConditions;
+    private final Player player;
+    private final Board board;
+    private final PrintStream printStream;
 
-    public Game(List<EndCondition> endConditions) {
-        this.endConditions = endConditions;
+    public Game(Player player, Board board, PrintStream printStream) {
+        this.player = player;
+        this.board = board;
+        this.printStream = printStream;
     }
 
-    public Optional<EndCondition> endCondition() {
-        return endConditions.
-                stream().
-                filter(endCondition -> endCondition.isMet()).
-                findFirst();
+    public void start() {
+        board.draw();
+        EndCondition endCondition = player.move();
+        printStream.println(endCondition.description());;
     }
 }
